@@ -1,0 +1,128 @@
+[workspace]
+members = [
+    ".",
+    "pc-core",        # Core types and traits
+    "pc-models",      # Data models (empresas, materiais, fiscal, etc)
+    "pc-db",          # Database layer (using AvilaDB)
+    "pc-importers",   # CSV and data importers
+    "pc-llm",         # Personal-Controller-LLM (RAG + inference)
+    "pc-api",         # REST/GraphQL API
+    "pc-cli",         # Command-line interface
+    # "pc-web",       # Web frontend (Next.js - not a Rust crate)
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Nícolas Ávila <nicolas@avila.inc>"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/avilaops/personal-controller"
+
+[package]
+name = "personal-controller"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Personal Controller - Plataforma unificada de gestão empresarial com IA da Ávila"
+repository.workspace = true
+readme = "README.md"
+keywords = ["erp", "management", "logistics", "ai", "llm"]
+categories = ["business", "database", "web-programming"]
+
+[dependencies]
+# Workspace crates
+pc-core = { path = "pc-core" }
+pc-models = { path = "pc-models" }
+pc-db = { path = "pc-db" }
+pc-importers = { path = "pc-importers" }
+pc-llm = { path = "pc-llm" }
+pc-api = { path = "pc-api" }
+pc-cli = { path = "pc-cli" }
+
+# Essential dependencies
+tokio = { version = "1.40", features = ["full"] }
+anyhow = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[workspace.dependencies]
+# Core async runtime
+tokio = { version = "1.40", features = ["full"] }
+async-trait = "0.1"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "2.0"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.8"
+
+# Database (reutilizando AvilaDB)
+# aviladb = { path = "../arxis/aviladb" }  # TODO: Enable when aviladb path is available
+
+# CSV parsing
+csv = "1.3"
+encoding_rs = "0.8"
+
+# Date/time
+chrono = { version = "0.4", features = ["serde"] }
+
+# LLM & Tokenization (do projeto arxis)
+tokenizers = "0.20"
+hf-hub = "0.3"
+llm-chain = "0.13"
+tiktoken-rs = "0.5"
+
+# Machine Learning (usando avila-ml do arxis)
+# avila-ml = { path = "../arxis/avila-ml" }  # TODO: Enable when available
+# avila-clustering = { path = "../arxis/avila-clustering" }
+# avila-reduction = { path = "../arxis/avila-reduction" }
+# avila-linalg = { path = "../arxis/avila-linalg" }
+ndarray = { version = "0.16", features = ["rayon", "serde"] }
+
+# Web framework
+axum = "0.7"
+tower = "0.5"
+tower-http = { version = "0.6", features = ["cors", "trace", "fs"] }
+
+# Telemetry (do projeto arxis)
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+# avx-telemetry = { path = "../arxis/avx-telemetry" }  # TODO: Enable when available
+
+# CLI
+clap = { version = "4.5", features = ["derive", "cargo"] }
+walkdir = "2.4"
+
+# Security (do projeto deriax)
+sha2 = "0.10"
+sha1 = "0.10"
+md5 = "0.7"
+hex = "0.4"
+base64 = "0.22"
+
+# Parallel processing
+rayon = "1.10"
+
+# HTTP client
+reqwest = { version = "0.12", features = ["json"] }
+
+# UUID generation
+uuid = { version = "1.11", features = ["v4", "serde"] }
+
+# Regex
+regex = "1.10"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+strip = true
+
+[profile.dev]
+opt-level = 0
+debug = true

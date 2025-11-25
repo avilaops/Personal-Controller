@@ -1,0 +1,31 @@
+[package]
+name = "pc-llm"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Personal Controller LLM - IA da Ávila"
+
+[dependencies]
+pc-core = { path = "../pc-core" }
+pc-models = { path = "../pc-models" }
+pc-db = { path = "../pc-db" }
+tokio = { workspace = true }
+async-trait = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+
+# LLM & Embeddings
+tokenizers = { workspace = true }
+tiktoken-rs = { workspace = true }
+llm-chain = { workspace = true }
+hf-hub = { workspace = true }
+
+# ML para embeddings
+# avila-ml = { workspace = true }  # TODO: Enable when available
+ndarray = { workspace = true }
+
+# HTTP client para APIs de LLM
+reqwest = { workspace = true }

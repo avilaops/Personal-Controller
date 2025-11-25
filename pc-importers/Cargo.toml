@@ -1,0 +1,23 @@
+[package]
+name = "pc-importers"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Personal Controller - Data importers"
+
+[dependencies]
+pc-core = { path = "../pc-core" }
+pc-models = { path = "../pc-models" }
+pc-db = { path = "../pc-db" }
+csv = { workspace = true }
+encoding_rs = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+regex = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+tokio = { workspace = true }
+walkdir = "2.4"

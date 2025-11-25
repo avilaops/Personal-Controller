@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # AvilaDB - Vector database
+  aviladb:
+    image: avilaops/aviladb:latest
+    container_name: pc-aviladb
+    ports:
+      - "8000:8000"
+    volumes:
+      - aviladb-data:/data
+    environment:
+      - AVILADB_AUTH=true
+      - AVILADB_PASSWORD=${AVILADB_PASSWORD:-aviladb123}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - pc-network
+
+  # API Backend
+  api:
+    build:
+      context: .
+      dockerfile: pc-api/Dockerfile
+    container_name: pc-api
+    ports:
+      - "3000:3000"
+    depends_on:
+      aviladb:
+        condition: service_healthy
+    environment:
+      - RUST_LOG=info
+      - DATABASE_URL=http://aviladb:8000
+      - DATABASE_PASSWORD=${AVILADB_PASSWORD:-aviladb123}
+      - LLM_MODEL=local
+      - CORS_ORIGIN=http://localhost:3001
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks:
+      - pc-network
+    restart: unless-stopped
+
+  # Web Frontend
+  web:
+    build:
+      context: ./pc-web
+      dockerfile: Dockerfile
+    container_name: pc-web
+    ports:
+      - "3001:3001"
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3000
+      - NODE_ENV=production
+    networks:
+      - pc-network
+    restart: unless-stopped
+
+volumes:
+  aviladb-data:
+    driver: local
+
+networks:
+  pc-network:
+    driver: bridge

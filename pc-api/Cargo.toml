@@ -1,0 +1,26 @@
+[package]
+name = "pc-api"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Personal Controller API"
+
+[[bin]]
+name = "pc-server"
+path = "src/main.rs"
+
+[dependencies]
+pc-core = { path = "../pc-core" }
+pc-models = { path = "../pc-models" }
+pc-db = { path = "../pc-db" }
+pc-llm = { path = "../pc-llm" }
+# avx-telemetry = { workspace = true }  # TODO: Enable when available
+tower = { workspace = true }
+tower-http = { workspace = true }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+anyhow = { workspace = true }

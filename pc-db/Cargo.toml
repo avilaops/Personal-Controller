@@ -1,0 +1,23 @@
+[package]
+name = "pc-db"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Personal Controller - Database layer (AvilaDB)"
+
+[features]
+default = []
+real-aviladb = []  # Enable when ../../arxis/aviladb is available
+
+[dependencies]
+pc-core = { path = "../pc-core" }
+pc-models = { path = "../pc-models" }
+# aviladb = { workspace = true, optional = true }  # TODO: Enable when aviladb is available
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+async-trait = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }
+anyhow = { workspace = true }

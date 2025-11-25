@@ -1,0 +1,42 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+*.md
+!README.md
+
+# Dependencies
+node_modules
+target
+.cargo
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env*.local
+
+# Build artifacts
+dist
+build
+.next
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test coverage
+coverage
+*.profraw
+*.profdata
