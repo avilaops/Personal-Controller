@@ -1,54 +1,80 @@
-# 🎯 Personal Controller
+# 🚛 Personal Controller
 
-**A Plataforma de Gestão Empresarial da Ávila, pela Ávila**
+> **Sistema completo que organiza automaticamente seus fretes, rotas e horas trabalhadas - com inteligência artificial integrada**
 
-Personal Controller é uma plataforma 100% em Rust que centraliza todas as informações empresariais da Ávila Transportes em um único sistema integrado, potencializado pela **Personal-Controller-LLM** - uma IA especializada treinada com dados reais da empresa.
+[🌐 Ver Landing Page](landing-page.html) | [📖 Guia Rápido](QUICKSTART.md) | [🔧 API Docs](API_DOCUMENTATION.md)
 
-## 🚀 Visão Geral
+---
 
-O Personal Controller integra:
+## ⚡ O que ele faz por você
 
-- 📦 **Gestão de Fretes** - Ordens, manifestos, rastreamento
-- 🏢 **Cadastro de Empresas** - Clientes, fornecedores, parceiros
-- 📊 **Controle Fiscal** - Notas fiscais, CT-e, documentos
-- 💰 **Gestão Financeira** - Pagamentos, recebimentos, fluxo de caixa
-- 👥 **Recursos Humanos** - Funcionários, ponto, folha de pagamento
-- 📍 **Rotas e Logística** - Planejamento de rotas, otimização
-- 📧 **Comunicação** - Emails, contatos, histórico
-- 🤖 **Personal-Controller-LLM** - IA conversacional com conhecimento da Ávila
+### 📦 **Fretes no Automático**
+Jogue seus arquivos Excel ou PDF de fretes e pronto - o sistema organiza tudo, valida CNPJs, calcula totais e mostra onde está cada entrega. Sem digitar nada.
 
-## 🏗️ Arquitetura
+### 🗺️ **Rotas Otimizadas**
+Coloque de onde sai e onde vai - ele calcula a rota mais econômica, quanto vai gastar por km e quando fazer manutenção do veículo.
 
+### ⏰ **Horas Calculadas**
+Registre quando trabalhou e ele calcula sozinho horas normais, extras e adicional noturno. Tudo pronto para folha de pagamento.
+
+### 🤖 **IA que Responde**
+Pergunte qualquer coisa: *"Quanto gastei de combustível em setembro?"* ou *"Quais fretes estão atrasados?"* - A IA responde na hora.
+
+### 📊 **Tudo Visual**
+Dashboard com gráficos em tempo real mostrando custos, fretes ativos, rotas rentáveis. Fácil de entender.
+
+---
+
+## 🎯 Está pronto para usar?
+
+✅ **SIM!** Principais funcionalidades operacionais:
+
+- ✅ Importação de fretes (Excel/PDF)
+- ✅ Gestão de rotas e custos
+- ✅ Controle de horas com cálculos automáticos
+- ✅ Chatbot com IA para consultas
+- ✅ Dashboard web interativo
+- ✅ API REST para integrações
+- ✅ Scripts de automação prontos
+
+🚧 **Em desenvolvimento:**
+- OCR de documentos fiscais
+- Análise preditiva de custos
+
+---
+
+## 🚀 Como começar (4 passos)
+
+### **Windows:**
+```powershell
+# 1. Clone o repositório
+git clone https://github.com/avilaops/Personal-Controller.git
+cd Personal-Controller
+
+# 2. Execute o script de inicialização
+.\start.ps1
+
+# 3. Abra o navegador
+# http://localhost:3000
+
+# 4. Comece a importar seus dados!
 ```
-personal-controller/
-├── pc-core/          # Core types and traits
-├── pc-models/        # Data models (empresas, materiais, fiscal, etc)
-├── pc-db/            # Database layer (using AvilaDB)
-├── pc-importers/     # CSV and data importers
-├── pc-llm/           # Personal-Controller-LLM (RAG + inference)
-├── pc-api/           # REST/GraphQL API
-├── pc-cli/           # Command-line interface
-└── pc-web/           # Web frontend
-```
 
-### Tecnologias Base
-
-- **Banco de Dados**: [AvilaDB](../arxis/aviladb) - NoSQL distribuído com busca vetorial
-- **Machine Learning**: [avila-ml](../arxis/avila-ml) - Suite completa de ML
-- **Tokenização**: Hugging Face Tokenizers + tiktoken-rs
-- **LLM Chain**: llm-chain para orquestração de modelos
-- **Analytics**: avila-telemetry para métricas e logs
-- **Security**: Baseado em Deriax para criptografia e validações
-
-## 🎯 Funcionalidades
-
-### 1. Importação Inteligente de Dados
-
+### **Linux/Mac:**
 ```bash
-pc import --type freight --file "d:/Arquivos/01-04.csv"
-pc import --type timesheets --file "d:/Arquivos/Horas.csv"
-pc import --auto "d:/Arquivos/*.csv"  # Auto-detect e importa tudo
+# 1. Clone o repositório
+git clone https://github.com/avilaops/Personal-Controller.git
+cd Personal-Controller
+
+# 2. Execute o script de inicialização
+chmod +x start.sh
+./start.sh
+
+# 3. Abra o navegador
+# http://localhost:3000
 ```
+
+---
 
 ### 2. Consultas Naturais com LLM
 
@@ -77,50 +103,87 @@ query {
 }
 ```
 
-### 4. Dashboard Web
+## 💡 Exemplos de uso
 
-Interface web moderna com:
-- Visualizações de dados em tempo real
-- Gráficos interativos
-- Chat com a Personal-Controller-LLM
-- Gestão de documentos
-- Relatórios customizados
-
-## 📦 Instalação
-
-### Requisitos
-
-- Rust 1.75+
-- AvilaDB instalado (do projeto arxis)
-- 4GB+ RAM
-
-### Setup Rápido
-
+### Importar fretes do Excel
 ```powershell
-# Clone o projeto
-cd d:\Personal-Controller
+# PowerShell
+.\scripts\import_all.ps1
 
-# Build completo
-cargo build --release
-
-# Importar dados iniciais
-.\scripts\import-all-data.ps1
-
-# Iniciar servidor
-cargo run --release --bin pc-server
-
-# Iniciar CLI
-cargo run --release --bin pc-cli
+# Ou manualmente
+cargo run --bin pc-cli import --file "seus-fretes.xlsx"
 ```
 
-## 🧠 Personal-Controller-LLM
+### Consultar via IA
+```bash
+# Abra o chat no dashboard (http://localhost:3000/chat)
+# Ou use a CLI:
+cargo run --bin pc-cli chat
 
-A Personal-Controller-LLM é uma IA especializada que:
+# Exemplos de perguntas:
+# "Quanto gastei de combustível em outubro?"
+# "Quais fretes estão atrasados?"
+# "Qual motorista fez mais viagens?"
+# "Me mostra o resumo do último mês"
+```
 
-1. **Conhece o negócio**: Treinada com dados históricos da Ávila
-2. **RAG inteligente**: Busca vetorial no AvilaDB para contexto preciso
-3. **Responde em português**: Otimizada para linguagem natural em PT-BR
-4. **Aprende continuamente**: Fine-tuning com novos dados
+### Ver relatórios
+```bash
+# Dashboard web com gráficos
+http://localhost:3000
+
+# Ou via linha de comando
+cargo run --bin pc-cli report --type monthly
+```
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+personal-controller/
+├── pc-api/           # Servidor REST API
+├── pc-cli/           # Interface de linha de comando
+├── pc-core/          # Tipos e traits principais
+├── pc-db/            # Camada de banco de dados
+├── pc-importers/     # Importadores Excel/PDF/CSV
+├── pc-llm/           # IA e chatbot
+├── pc-models/        # Modelos de dados
+├── pc-web/           # Frontend Next.js
+├── scripts/          # Scripts de automação
+├── examples/         # Exemplos de código
+└── data/             # Dados importados
+```
+
+---
+
+## 🔧 Para desenvolvedores
+
+### Compilar
+```bash
+cargo build --release
+```
+
+### Rodar testes
+```bash
+cargo test
+```
+
+### Rodar API
+```bash
+cargo run --bin pc-api
+# API disponível em http://localhost:8080
+```
+
+### Rodar frontend
+```bash
+cd pc-web
+npm install
+npm run dev
+# Frontend em http://localhost:3000
+```
+
+---
 
 ### Arquitetura da LLM
 
@@ -207,13 +270,65 @@ pub struct Timesheet {
 }
 ```
 
-## 🔐 Segurança
+## 🤝 Contribuir
 
-- Hashing de senhas: SHA-256
-- Tokens JWT para autenticação
-- Criptografia de dados sensíveis
-- Audit log completo
-- RBAC (Role-Based Access Control)
+Contribuições são bem-vindas! 
+
+1. Fork o projeto
+2. Crie uma branch: `git checkout -b minha-feature`
+3. Commit suas mudanças: `git commit -m 'Adiciona nova feature'`
+4. Push: `git push origin minha-feature`
+5. Abra um Pull Request
+
+---
+
+## 📄 Licença
+
+MIT License - veja [LICENSE](LICENSE) para detalhes.
+
+---
+
+## 👤 Autor
+
+**Nícolas Ávila**
+- GitHub: [@avilaops](https://github.com/avilaops)
+- Website: [avilaops.com](https://www.avilaops.com)
+- Empresa: [@avilainc](https://github.com/avilainc)
+
+---
+
+## 📚 Documentação Adicional
+
+- [📖 Guia Rápido](QUICKSTART.md) - Comece em 5 minutos
+- [🏗️ Arquitetura](ARCHITECTURE.md) - Detalhes técnicos
+- [🔧 API](API_DOCUMENTATION.md) - Documentação da API
+- [🧪 Testes](TESTING.md) - Como testar
+- [🚀 Deploy](DEPLOYMENT.md) - Colocar em produção
+- [📊 Análise de Dados](DATA_ANALYSIS_GUIDE.md) - Guia de análise
+
+---
+
+## 🆘 Suporte
+
+Encontrou um problema? 
+- Abra uma [issue no GitHub](https://github.com/avilaops/Personal-Controller/issues)
+- Veja a [documentação completa](https://github.com/avilaops/Personal-Controller)
+
+---
+
+## ⭐ Gostou?
+
+Se este projeto te ajudou, deixe uma ⭐ no repositório!
+
+---
+
+<div align="center">
+  
+**Personal Controller** - Sistema inteligente de gestão logística
+  
+Feito com 💙 por [Nícolas Ávila](https://github.com/avilaops)
+
+</div>
 
 ## 📈 Roadmap
 
